@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import firebaseDB from "../firebase.js";
 import ContactForm from "./ContactForm";
+import SingleContact from "./SingleContact.js";
 function Contacts() {
 	const [allContacts, setAllContacts] = useState([]);
 	const [contactObjects, setContactObjects] = useState({});
@@ -72,40 +73,17 @@ function Contacts() {
 						</thead>
 						<tbody>
 							{Object.keys(contactObjects).length ? "" : "Loading..."}
-							{Object.keys(contactObjects).map((id) => {
-								return (
-									<tr key={id}>
-										<th>{contactObjects[id].fullName}</th>
-										<td>{contactObjects[id].mobile} </td>
-										<td> {contactObjects[id].email} </td>
-										<td className="action-icons">
-											<i
-												className="far fa-edit"
-												onClick={() => {
-													setCurrentId(id);
-												}}
-											></i>
-											<i
-												className="far fa-trash-alt"
-												onClick={() => onDelete(id)}
-											></i>
-										</td>
-									</tr>
-								);
-							})}
 
-							{/* {allContacts.length &&
-								allContacts.map((contact, index) => (
-									<tr key={index}>
-										<th>{contact.fullName}</th>
-										<td>{contact.mobile} </td>
-										<td> {contact.email} </td>
-										<td className="action-icons">
-											<i className="far fa-edit "></i>
-											<i className="far fa-trash-alt"></i>
-										</td>
-									</tr>
-								))} */}
+							{Object.keys(contactObjects).length &&
+								Object.keys(contactObjects).map((id) => (
+									<SingleContact
+										key={id}
+										id={id}
+										contactInfo={contactObjects[id]}
+										onDelete={onDelete}
+										setCurrentId={setCurrentId}
+									/>
+								))}
 						</tbody>
 					</table>
 				</div>
